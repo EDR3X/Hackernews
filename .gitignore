@@ -1,6 +1,5 @@
 #env
 .env
-lib/firebase_options.dart
 
 
 # Miscellaneous
