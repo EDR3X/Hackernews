@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'constants/firebase_keys.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -44,8 +44,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['WEB'] ?? 'Web Api error',
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: webKey,
     appId: '1:598168443925:web:3e033de6b087d9e1ae021c',
     messagingSenderId: '598168443925',
     projectId: 'app-hackernews-api',
@@ -53,16 +53,16 @@ class DefaultFirebaseOptions {
     storageBucket: 'app-hackernews-api.appspot.com',
   );
 
-  static FirebaseOptions android = FirebaseOptions(
-    apiKey: dotenv.env['ANDROID'] ?? 'Android Api error',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: androidKey,
     appId: '1:598168443925:android:05c7cd0067a0d10aae021c',
     messagingSenderId: '598168443925',
     projectId: 'app-hackernews-api',
     storageBucket: 'app-hackernews-api.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: dotenv.env['APPLE'] ?? 'Apple Api error',
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: appleKey,
     appId: '1:598168443925:ios:85cd8f1546f54d9aae021c',
     messagingSenderId: '598168443925',
     projectId: 'app-hackernews-api',
@@ -72,8 +72,8 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.hackernews',
   );
 
-  static FirebaseOptions macos = FirebaseOptions(
-    apiKey: dotenv.env['APPLE'] ?? 'Apple Api error',
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: appleKey,
     appId: '1:598168443925:ios:85cd8f1546f54d9aae021c',
     messagingSenderId: '598168443925',
     projectId: 'app-hackernews-api',
