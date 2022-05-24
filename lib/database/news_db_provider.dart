@@ -11,7 +11,39 @@ class NewsDbProvider {
   init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentDirectory.path, "Items.db");
-    db = await openDatabase(path,
-        version: 1, onCreate: (Database newDb, int version) {});
+    db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: (Database newDb, int version) {
+        newDb.execute(
+          """
+          CREATE TABLE Items
+            (
+              id INTEGER PRIMARY KEY,
+              type TEXT,
+              by TEXT,
+              time INTEGER,
+              parent INTEGER,
+              kids BLOB,
+              dead INTEGER,
+              deleted INTEGER,
+              url TEXT,
+              score INTEGER,
+              title TEXT,
+              descendants INTEGER
+            )
+        """,
+        );
+      },
+    );
+  }
+
+  fetchItem(int id) async {
+    db?.query(
+      "Items",
+      columns: null,
+      where: "id = ?",
+      whereArgs: [id],
+    );
   }
 }
