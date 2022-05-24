@@ -39,11 +39,17 @@ class NewsDbProvider {
   }
 
   fetchItem(int id) async {
-    db?.query(
+    final maps = await db?.query(
       "Items",
       columns: null,
       where: "id = ?",
       whereArgs: [id],
     );
+
+    if (maps!.isNotEmpty) {
+      return ItemModel.fromDb(maps.first);
+    }
+
+    return null;
   }
 }
