@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:hackernews/database/repo.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../models/item_model.dart';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source {
   Database? db;
+
+  @override
+  Future<List<int>> fetchTopIds() => null!;
 
   void init() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
@@ -40,7 +44,8 @@ class NewsDbProvider {
     );
   }
 
-  Future<ItemModel?> fetchItem(int id) async {
+  @override
+  Future<ItemModel> fetchItem(int id) async {
     final maps = await db?.query(
       "Items",
       columns: null,
@@ -52,7 +57,7 @@ class NewsDbProvider {
       return ItemModel.fromDb(maps.first);
     }
 
-    return null;
+    return null!;
   }
 
   //* This function adds items to database
