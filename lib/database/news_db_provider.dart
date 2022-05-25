@@ -53,6 +53,7 @@ class NewsDbProvider {
     return null;
   }
 
+  //* This function adds items to database
   addItem(ItemModel item) {
     return db?.insert("Items", item.toMapForDb());
   }
