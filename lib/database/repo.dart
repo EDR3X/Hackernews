@@ -4,25 +4,37 @@ import 'dart:async';
 import '../models/item_model.dart';
 
 class Repository {
-  NewsDbProvider dbProvider = NewsDbProvider();
-  NewsApiProvider apiProvider = NewsApiProvider();
+  // NewsDbProvider dbProvider = NewsDbProvider();
+  // NewsApiProvider apiProvider = NewsApiProvider();
+
+  List<Source> sources = <Source>[
+    newsDbProvider,
+    NewsDbProvider(),
+  ];
+
+  List<Cache> caches = <Cache>[
+    newsDbProvider,
+  ];
 
   Future<List<int>> fetchTopIds() => apiProvider.fetchTopIds();
 
   Future<ItemModel> fetchItem(int id) async {
-    //* looks for item in Database
-    var item = await dbProvider.fetchItem(id);
-    if (item != null) {
-      return item;
+    ItemModel? item;
+    Source source;
+
+    for (source in sources) {
+      item = await source.fetchItem(id);
+
+      if (item != null) {
+        break;
+      }
     }
 
-    //* fetches item from API if not found in Database.
-    item = await apiProvider.fetchItem(id);
+    for (var cache in caches) {
+      cache.addItem(item!);
+    }
 
-    //* then item which is not in Database is pushed in database.
-    dbProvider.addItem(item);
-
-    return item;
+    return item!;
   }
 }
 
@@ -31,4 +43,6 @@ abstract class Source {
   Future<ItemModel>? fetchItem(int id);
 }
 
-abstract class Cache {}
+abstract class Cache {
+  Future<int>? addItem(ItemModel item);
+}

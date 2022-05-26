@@ -8,8 +8,12 @@ import 'package:sqflite/sqflite.dart';
 
 import '../models/item_model.dart';
 
-class NewsDbProvider implements Source {
+class NewsDbProvider implements Source, Cache {
   Database? db;
+
+  NewsDbProvider() {
+    init();
+  }
 
   @override
   Future<List<int>> fetchTopIds() => null!;
@@ -61,8 +65,11 @@ class NewsDbProvider implements Source {
   }
 
   //* This function adds items to database
+  @override
   Future<int>? addItem(ItemModel item) => db?.insert(
         "Items",
         item.toMapForDb(),
       );
 }
+
+final newsDbProvider = NewsDbProvider();
