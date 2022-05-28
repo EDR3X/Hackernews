@@ -12,14 +12,7 @@ class MyHomePage extends StatelessWidget {
           "Hackernews",
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("hello"),
-          ],
-        ),
-      ),
+      body: const Text("Show a list"),
     );
   }
 }
